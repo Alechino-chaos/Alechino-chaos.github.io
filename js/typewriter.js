@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // 目标文本（需替换为你想要的内容）
   const targetText = "Why not let your wrath incinerate the scroll of destiny? Are you willing to become the Blazing Sun?";
   // 限定显示长度（例如 30 个字符）
-  const maxLength = 30;
+  const maxLength = 60;
   // 打字速度（毫秒/字符）
   const typeSpeed = 100;
   // 循环容器
@@ -11,8 +11,12 @@ document.addEventListener('DOMContentLoaded', function() {
   container.style.fontSize = '24px';
   container.style.color = '#fff';
   container.style.textAlign = 'center';
-  document.getElementById('page-header').appendChild(container);
+  document.querySelector('.page').appendChild(container);
 
+  const originalText = document.querySelector('.page').querySelector('div'); // 假设原有文字在.page下的div中
+  if (originalText) {
+    originalText.style.display = 'none';
+  }
   // 核心打字逻辑：逐字添加，超出长度则删除头部字符，循环执行
   let currentIndex = 0;
   function type() {
