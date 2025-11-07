@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function() {
   container.style.fontSize = '24px';
   container.style.color = '#fff';
   container.style.textAlign = 'center';
-  document.querySelector('.top-img').appendChild(container);
+  document.getElementById('page-header').appendChild(container);
 
   // 核心打字逻辑：逐字添加，超出长度则删除头部字符，循环执行
   let currentIndex = 0;
