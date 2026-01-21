@@ -1,6 +1,7 @@
 /* 定位标题元素（需根据实际 HTML 结构调整选择器） */
 #site-title {
-  background: linear-gradient(45deg, #ffd700, #ff4500, #8a2be2, #00bfff);
+  /* 将颜色代码改成火系渐变 */
+  background: linear-gradient(45deg, #ff0000, #ff4500, #ffd700, #8b0000);
   background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

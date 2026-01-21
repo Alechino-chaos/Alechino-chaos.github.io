@@ -1,28 +1,56 @@
 /* ==================================
-   Hexo 首页副标题 - 燃烧宿命特效 (加强版)
+   Hexo 首页副标题 - 燃烧宿命 + 呼吸特效 (最终版)
    ================================== */
 
-/* 1. 核心容器及其所有子元素 */
-#site-title, 
-#site-subtitle, 
-#site-subtitle span { 
-    font-family: 'Times New Roman', serif !important; /* 强制衬线体 */
-    color: #ffcc00 !important;      /* 改成亮金色 (不再是纯白) */
-    text-shadow: 
-        0 0 10px #ffcc00, 
-        0 0 20px #ff6600, 
-        0 0 30px #ff0000 !important; /* 强制发光 */
+/* 1. 定义动画关键帧：呼吸 + 火焰强弱变化 */
+@keyframes fire-breath {
+    0%, 100% {
+        transform: scale(1); /* 原始大小 */
+        text-shadow: 
+            0 0 10px #ffcc00, 
+            0 0 20px #ff6600, 
+            0 0 30px #ff0000; /* 正常火焰 */
+    }
+    50% {
+        transform: scale(1.05); /* 放大 5% */
+        text-shadow: 
+            0 0 20px #ffcc00, 
+            0 0 35px #ff4500, 
+            0 0 50px #8b0000; /* 放大时，火焰燃烧得更旺（光晕更红更亮） */
+    }
 }
 
-/* 2. 专门针对打字机的光标 */
+/* 2. 应用到大标题和打字机区域 */
+#site-title, 
+#site-subtitle { 
+    font-family: 'Times New Roman', serif !important; /* 强制衬线体 */
+    color: #ffcc00 !important;      /* 亮金色 */
+    
+    /* ★ 核心修改：添加呼吸动画 (3秒一次循环，平滑过渡) ★ */
+    animation: fire-breath 3s ease-in-out infinite;
+}
+
+/* 3. 确保打字机生成的文字也能继承颜色 */
+/* 注意：这里不给 span 加动画，让它跟着父元素动就行，防止双重抖动 */
+#site-subtitle span {
+    font-family: 'Times New Roman', serif !important;
+    color: #ffcc00 !important;
+    text-shadow: inherit; /* 继承父元素的火焰光效 */
+}
+
+/* 4. 专门针对打字机的光标 */
 .typed-cursor {
     color: #ffcc00 !important;
     font-weight: bold;
 }
 
-/* 3. 手机端适配 */
+/* 5. 手机端适配 */
 @media screen and (max-width: 768px) {
-    #site-subtitle, #site-subtitle span {
+    #site-subtitle {
         font-size: 24px !important;
+    }
+    /* 手机屏幕小，建议减弱呼吸幅度，或者直接设为 none 关掉，防止看着晕 */
+    #site-title, #site-subtitle {
+        animation: fire-breath 4s ease-in-out infinite; /* 手机上慢一点 */
     }
 }
