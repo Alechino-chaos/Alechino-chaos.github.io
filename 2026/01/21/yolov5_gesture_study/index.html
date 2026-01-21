@@ -1,0 +1,247 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>基于YOLOv5框架的目标检测 | Why not let your wrath incinerate the scroll of destiny? Are you willing to become the Blazing Sun?</title><meta name="author" content="Alechino"><meta name="copyright" content="Alechino"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="基于YOLOv5框架的目标检测 总结 开发环境：Windows11, NVDIA GPU, MMYOLO框架 PyTorch核心模型：yolov5 数据集来源：https:&#x2F;&#x2F;universe.roboflow.com&#x2F;   安装mmyolo直接在https:&#x2F;&#x2F;github.com&#x2F;open-mmlab&#x2F;mmyolo上找安装教程。   conda create -n mmyolo python&#x3D;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于YOLOv5框架的目标检测">
+<meta property="og:url" content="http://example.com/2026/01/21/yolov5_gesture_study/index.html">
+<meta property="og:site_name" content="Why not let your wrath incinerate the scroll of destiny? Are you willing to become the Blazing Sun?">
+<meta property="og:description" content="基于YOLOv5框架的目标检测 总结 开发环境：Windows11, NVDIA GPU, MMYOLO框架 PyTorch核心模型：yolov5 数据集来源：https:&#x2F;&#x2F;universe.roboflow.com&#x2F;   安装mmyolo直接在https:&#x2F;&#x2F;github.com&#x2F;open-mmlab&#x2F;mmyolo上找安装教程。   conda create -n mmyolo python&#x3D;">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://alechino-blog-images.oss-cn-beijing.aliyuncs.com/16e4ca8ef2c5d2c53e599ccaf330d3bf.jpg">
+<meta property="article:published_time" content="2026-01-21T10:00:00.000Z">
+<meta property="article:modified_time" content="2026-01-21T11:25:34.300Z">
+<meta property="article:author" content="Alechino">
+<meta property="article:tag" content="MMYOLO">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="YOLO">
+<meta property="article:tag" content="深度学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://alechino-blog-images.oss-cn-beijing.aliyuncs.com/16e4ca8ef2c5d2c53e599ccaf330d3bf.jpg"><script type="application/ld+json">{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "基于YOLOv5框架的目标检测",
+  "url": "http://example.com/2026/01/21/yolov5_gesture_study/",
+  "image": "https://alechino-blog-images.oss-cn-beijing.aliyuncs.com/16e4ca8ef2c5d2c53e599ccaf330d3bf.jpg",
+  "datePublished": "2026-01-21T10:00:00.000Z",
+  "dateModified": "2026-01-21T11:25:34.300Z",
+  "author": [
+    {
+      "@type": "Person",
+      "name": "Alechino",
+      "url": "http://example.com"
+    }
+  ]
+}</script><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="http://example.com/2026/01/21/yolov5_gesture_study/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css?v=5.5.1"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@7.1.0/css/all.min.css"><script>
+    (() => {
+      
+    const saveToLocal = {
+      set: (key, value, ttl) => {
+        if (!ttl) return
+        const expiry = Date.now() + ttl * 86400000
+        localStorage.setItem(key, JSON.stringify({ value, expiry }))
+      },
+      get: key => {
+        const itemStr = localStorage.getItem(key)
+        if (!itemStr) return undefined
+        const { value, expiry } = JSON.parse(itemStr)
+        if (Date.now() > expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return value
+      }
+    }
+
+    window.btf = {
+      saveToLocal,
+      getScript: (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        Object.entries(attr).forEach(([key, val]) => script.setAttribute(key, val))
+        script.onload = script.onreadystatechange = () => {
+          if (!script.readyState || /loaded|complete/.test(script.readyState)) resolve()
+        }
+        script.onerror = reject
+        document.head.appendChild(script)
+      }),
+      getCSS: (url, id) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onload = link.onreadystatechange = () => {
+          if (!link.readyState || /loaded|complete/.test(link.readyState)) resolve()
+        }
+        link.onerror = reject
+        document.head.appendChild(link)
+      }),
+      addGlobalFn: (key, fn, name = false, parent = window) => {
+        if (!false && key.startsWith('pjax')) return
+        const globalFn = parent.globalFn || {}
+        globalFn[key] = globalFn[key] || {}
+        globalFn[key][name || Object.keys(globalFn[key]).length] = fn
+        parent.globalFn = globalFn
+      }
+    }
+  
+      
+      const activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      const activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+
+      btf.activateDarkMode = activateDarkMode
+      btf.activateLightMode = activateLightMode
+
+      const theme = saveToLocal.get('theme')
+    
+          theme === 'dark' ? activateDarkMode() : theme === 'light' ? activateLightMode() : null
+        
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        document.documentElement.classList.toggle('hide-aside', asideStatus === 'hide')
+      }
+    
+      
+    const detectApple = () => {
+      if (/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)) {
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+  
+    })()
+  </script><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false,"highlightFullpage":false,"highlightMacStyle":false},
+  copy: {
+    success: 'Copy Successful',
+    error: 'Copy Failed',
+    noSupport: 'Browser Not Supported'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '',
+  dateSuffix: {
+    just: 'Just now',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'null',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid@4.12.0/dist/infinitegrid.min.js',
+    buttonText: 'Load More'
+  },
+  isPhotoFigcaption: false,
+  islazyloadPlugin: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '基于YOLOv5框架的目标检测',
+  isHighlightShrink: false,
+  isToc: true,
+  pageType: 'post'
+}</script><meta name="generator" content="Hexo 8.0.0"></head><body><div class="post" id="body-wrap"><header class="post-bg fixed" id="page-header" style="background-image: url(https://alechino-blog-images.oss-cn-beijing.aliyuncs.com/16e4ca8ef2c5d2c53e599ccaf330d3bf.jpg);"><nav id="nav"><span id="blog-info"><a class="nav-site-title" href="/"><img class="site-icon" src="/images/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20251026153549_59_62.jpg" alt="Logo"><span class="site-name">Why not let your wrath incinerate the scroll of destiny? Are you willing to become the Blazing Sun?</span></a><a class="nav-page-title" href="/"><span class="site-name">基于YOLOv5框架的目标检测</span><span class="site-name"><i class="fa-solid fa-circle-arrow-left"></i><span>  Back to Home</span></span></a></span><div id="menus"></div></nav><div id="post-info"><h1 class="post-title">基于YOLOv5框架的目标检测</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2026-01-21T10:00:00.000Z" title="Created 2026-01-21 18:00:00">2026-01-21</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2026-01-21T11:25:34.300Z" title="Updated 2026-01-21 19:25:34">2026-01-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0/">学习笔记</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title=""><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">Post Views:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="container post-content" id="article-container"><h1 id="基于YOLOv5框架的目标检测"><a href="#基于YOLOv5框架的目标检测" class="headerlink" title="基于YOLOv5框架的目标检测"></a>基于YOLOv5框架的目标检测</h1><hr>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><ul>
+<li>开发环境：Windows11, NVDIA GPU, MMYOLO框架</li>
+<li>PyTorch核心模型：yolov5</li>
+<li>数据集来源：<code>https://universe.roboflow.com/</code></li>
+</ul>
+<hr>
+<h2 id="安装mmyolo"><a href="#安装mmyolo" class="headerlink" title="安装mmyolo"></a>安装mmyolo</h2><p>直接在<a target="_blank" rel="noopener" href="https://github.com/open-mmlab/mmyolo">https://github.com/open-mmlab/mmyolo</a>上找安装教程。</p>
+<blockquote>
+<ul>
+<li><code>conda create -n mmyolo python=3.8 pytorch==1.10.1 ...</code>是使用 conda 创建一个新的虚拟环境，并起名 mmyolo。</li>
+<li><code>conda activate mmyolo</code>用来激活这个环境，进入到mmyolo里。</li>
+<li>其中<code>git clone https://github.com/open-mmlab/mmyolo.git</code>会把 mmyolo 的源代码下载到电脑上</li>
+</ul>
+</blockquote>
+<hr>
+<h2 id="训练流程"><a href="#训练流程" class="headerlink" title="训练流程"></a>训练流程</h2><ol>
+<li><p>框架认知：</p>
+<ul>
+<li>确认使用 <strong>MMYOLO</strong> 工具箱。</li>
+<li>明确模型架构为 <strong>YOLOv5-s (Small版本)</strong>：<ul>
+<li><strong>Backbone</strong>: CSPDarknet (负责特征提取)</li>
+<li><strong>Neck</strong>: PAFPN (负责多尺度特征融合)</li>
+<li><strong>Head</strong>: YOLOv5 Head (负责最终分类与回归)</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>配置文件：</p>
+<ul>
+<li>读取<code>_base_</code>，使配置文件基于 yolov5 框架运行。</li>
+<li>在<code>train_dataloader</code>中修改<code>batch_size</code>(每次给显卡训练几张图，考验显卡性能)和<code>num_workers</code>(CPU 派几个搬运工在后台读取图片)。基于我的电脑配置，分别设置为8，2较好，兼顾速度和内存，显卡安全。</li>
+<li>因为我要进行剪刀石头布的目标识别，所以<strong>修改 class_names 为 (‘rock’, ‘paper’, ‘scissors’)。</strong></li>
+<li>在model中，有<code>backbone</code>, <code>neck</code>, <code>bbox_head</code>三个层次，<strong>需要把<code>bbox_head</code>中的<code>num_classes</code>改为3</strong>，对应三种类别。</li>
+<li>修改训练参数<code>max_epochs</code>(训练多少轮)和<code>val_interval</code>(每隔多少轮考试一次并生成mAP数据)。</li>
+</ul>
+</li>
+<li><p>开始训练：</p>
+<ul>
+<li>先激活环境:<code>conda activate mmyolo</code></li>
+<li>在终端中输入<code>python tools/train.py my_train_config.py</code>(其中<code>my_train_config.py</code>就是自己的配置文件)</li>
+<li>如果之前已经训练过却因一些问题中途退出了，想继续刚才的训练，则输入<code>python tools/train.py my_train_config.py --resume</code></li>
+</ul>
+</li>
+<li><p>结果评估：</p>
+<ul>
+<li>mAP(mean Average Precision) – 平均精度</li>
+<li>Recall – 召回率：能找出多少目标</li>
+<li>Loss – 损失值<ul>
+<li>loss_cls – 分类损失</li>
+<li>loss_bbox – 定位损失</li>
+<li>loss_obj – 目标损失</li>
+</ul>
+</li>
+<li>loU(Intersection over Union) – 交并比(重叠度)：模型画的框和真实框重叠了多少</li>
+</ul>
+</li>
+</ol>
+<hr>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><ol>
+<li><p>内存告急(OOM风险)：在进行模型训练的时候，会占用大量的内存，这时我们要在任务管理器中<strong>结束一些任务</strong>来腾出空间。下面几个是我的电脑上占用较多的</p>
+<ul>
+<li>Google Chrome</li>
+<li>vscode</li>
+<li>DTS音效处理(异常占用)</li>
+</ul>
+</li>
+<li><p>致命报错</p>
+<ul>
+<li>报错信息：<code>RuntimeError: CUDA error: an illegal memory access was encountered</code></li>
+<li>根本原因：硬件不稳定。显存过热(没有做好散热)。</li>
+<li>解决办法：重启，做好散热，然后使用<code>--resume</code>指令接着跑。</li>
+</ul>
+</li>
+<li><p><strong>格式冲突</strong></p>
+<ul>
+<li>YOLO格式(.txt)：归一化描述坐标，如<code>0  0.5000  0.5000  0.2000  0.3000</code>。在训练时，模型经常需要对图片进行缩放（比如把你 1920x1080 的图缩放到 640x640）。如果不告诉模型原图多大，它在反算坐标时就会懵圈。</li>
+<li>COCO格式(.json)：用绝对值描述，如<code>&quot;bbox&quot;: [320, 240, 128, 192]</code>。标准的 COCO JSON 格式里，每一张图片的信息都包含height 和 width。</li>
+</ul>
+<p> 由于计算 mAP 的标准工具 pycocotools <strong>只认 .json 格式</strong>，因此我们可以写一个转化脚本make_json.py来进行反归一化，把  labels 文件夹中所有的 .txt 文件转换成一个大的 .json 文件。</p>
+</li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>Author: </span><span class="post-copyright-info"><a href="http://example.com">Alechino</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>Link: </span><span class="post-copyright-info"><a href="http://example.com/2026/01/21/yolov5_gesture_study/">http://example.com/2026/01/21/yolov5_gesture_study/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>Copyright Notice: </span><span class="post-copyright-info">All articles on this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless otherwise stated.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/YOLO/">YOLO</a><a class="post-meta__tags" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><a class="post-meta__tags" href="/tags/MMYOLO/">MMYOLO</a><a class="post-meta__tags" href="/tags/Python/">Python</a></div><div class="post-share"><div class="social-share" data-image="https://alechino-blog-images.oss-cn-beijing.aliyuncs.com/16e4ca8ef2c5d2c53e599ccaf330d3bf.jpg" data-sites="facebook,x,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc@1.1.6/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><a class="pagination-related full-width" href="/2025/11/07/oopre%E6%80%BB%E7%BB%93/" title="OOpre总结"><img class="cover" src="/images/f4e8f05b263eadddec9fb4a1aaf0d487.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="info text-right"><div class="info-1"><div class="info-item-1">Next</div><div class="info-item-2">OOpre总结</div></div><div class="info-2"><div class="info-item-1">前言&nbsp;&nbsp;&nbsp;&nbsp;历经5次迭代，硬核且精彩的oopre迎来了完美的落幕。依稀记得刚接触java时的毫无头绪，敲了一天屎山代码的痛苦，但这些杀不死我的，最终都会使我更强大。这篇博客，就当作我对oopre的告别吧，同时也是对下学期oo的展望。  项目架构&nbsp;&nbsp;&nbsp;&nbsp;以下是最终的架构：  第一次迭代：创建三个类：Adventurer,Bottle,Equipment，为了实现冒险者对药水瓶和武器的增删操作，我们可以创建两个列表来管理。  &#x2139;&#xfe0f; 列表和哈希表：&nbsp;&nbsp;&nbsp;&nbsp;列表里的数据是有序的，而哈希表是无序的。因此，如果需要一个有序的集合，或需要通过整数索引来频繁地访问元素，我们就选择列表；反之，如果需要快速地通过键来查找数据，而不在乎这些数据是如何排序的，我们就选择哈希表。  第二次迭代：这次的作业就复杂许多，涉及到了继承和接口的设计。  对于 Bottle 细分成 HpBottle,DefBottle 等，我们就可以用继承来实现，因为HpBottle作...</div></div></div></a></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info text-center"><div class="avatar-img"><img src="/images/78645d9f94de4cd7b514dc6d26c6f24dpreview.jpeg~tplv-a9rns2rl98-downsize_watermark_1_5.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info-name">Alechino</div><div class="author-info-description"></div><div class="site-data"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">5</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">2</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/xxxxxx"><i class="fab fa-github"></i><span>Follow Me</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>Announcement</span></div><div class="announcement_content">This is my Blog</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Contents</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8EYOLOv5%E6%A1%86%E6%9E%B6%E7%9A%84%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B"><span class="toc-number">1.</span> <span class="toc-text">基于YOLOv5框架的目标检测</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">1.1.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85mmyolo"><span class="toc-number">1.2.</span> <span class="toc-text">安装mmyolo</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E6%B5%81%E7%A8%8B"><span class="toc-number">1.3.</span> <span class="toc-text">训练流程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98"><span class="toc-number">1.4.</span> <span class="toc-text">常见问题</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Posts</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2026/01/21/yolov5_gesture_study/" title="基于YOLOv5框架的目标检测"><img src="https://alechino-blog-images.oss-cn-beijing.aliyuncs.com/16e4ca8ef2c5d2c53e599ccaf330d3bf.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="基于YOLOv5框架的目标检测"/></a><div class="content"><a class="title" href="/2026/01/21/yolov5_gesture_study/" title="基于YOLOv5框架的目标检测">基于YOLOv5框架的目标检测</a><time datetime="2026-01-21T10:00:00.000Z" title="Created 2026-01-21 18:00:00">2026-01-21</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2025/11/07/oopre%E6%80%BB%E7%BB%93/" title="OOpre总结"><img src="/images/f4e8f05b263eadddec9fb4a1aaf0d487.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="OOpre总结"/></a><div class="content"><a class="title" href="/2025/11/07/oopre%E6%80%BB%E7%BB%93/" title="OOpre总结">OOpre总结</a><time datetime="2025-11-07T02:00:00.000Z" title="Created 2025-11-07 10:00:00">2025-11-07</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/10/26/hello-world/" title="Hello World">Hello World</a><time datetime="2025-10-26T03:09:29.450Z" title="Created 2025-10-26 11:09:29">2025-10-26</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/10/26/%E5%A6%82%E4%BD%95%E2%80%9C%E4%B8%9D%E6%BB%91%E2%80%9C%E5%9C%B0%E6%90%AD%E5%BB%BA%E5%8D%9A%E5%AE%A2/" title="如何“丝滑“地搭建博客">如何“丝滑“地搭建博客</a><time datetime="2025-10-25T17:23:19.000Z" title="Created 2025-10-26 01:23:19">2025-10-26</time></div></div></div></div></div></div></main><footer id="footer"><div class="footer-other"><div class="footer-copyright"><span class="copyright">&copy;&nbsp;2025 - 2026 By Alechino</span><span class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo 8.0.0</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly 5.5.1</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Reading Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Toggle Between Light and Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle Between Single-column and Double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="Settings"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back to Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js?v=5.5.1"></script><script src="/js/main.js?v=5.5.1"></script><div class="js-pjax"></div><script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.16/lib/typed.min.js"></script><script src="/js/typewriter.js"></script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
