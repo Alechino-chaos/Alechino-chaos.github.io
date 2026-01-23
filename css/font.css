@@ -3,7 +3,8 @@
 
 /* 应用字体 */
 body, h1, h2, h3, h4, h5, h6, .article-content p {
-    font-family: 'LXGW WenKai Screen', sans-serif !important;
+    font-family: 'Segoe UI', 'Helvetica Neue', Arial, 'LXGW WenKai Screen', sans-serif !important;
+    font-weight: 500;
 }
 
 /* 保持代码块依然使用等宽字体，不被文楷覆盖 (可选) */
